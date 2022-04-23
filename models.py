@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 import pickle
+# nltk.download()
 import nltk
-#nltk.download()
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.pipeline import Pipeline
