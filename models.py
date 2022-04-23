@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 import pickle
-# nltk.download()
 import nltk
+#nltk.download()
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.pipeline import Pipeline
@@ -55,7 +55,7 @@ class Models:
         classifier = classifier.fit(self.x, self.y)
         pickle.dump(classifier, open(self.name + '.pkl', "wb"))
         return classifier
-
+        
     def accuracy(self, model):
         predicted = model.predict(self.x1)
         accuracy = np.mean(predicted == self.y1)
