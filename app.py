@@ -4,7 +4,6 @@ import pandas as pd
 from flask import Flask, request, render_template,flash,redirect,session,abort,jsonify
 from datetime import datetime
 from analytics import write_to_csv_departments,write_to_csv_teachers
-from models import StemmedCountVectorizer
 from analytics import get_counts,get_tables,get_titles
 from teacherdashboard import get_feedback_counts
 
@@ -96,7 +95,7 @@ def predict():
     teacher5 = request.form['teacher5']
     teacher6 = request.form['teacher6']
 
-    model = pickle.load(open('SVM classifier.pkl', 'rb'))
+    model = pickle.load(open('pickel_files/SVM_classifier.pkl', 'rb'))
     teachingscore = model.predict(pd.array([teaching]))
     courseContentscore = model.predict(pd.array([courseContent]))
     examinationscore = model.predict(pd.array([examination]))

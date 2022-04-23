@@ -12,6 +12,7 @@ def write_to_csv_departments(time,teachingscore,teaching,courseContentscore,cour
         reader = csv.reader(f)
         for header in reader:
             break
+        
     with open('dataset/database.csv', "a", newline='') as f:
         writer = csv.DictWriter(f, fieldnames=header)
         dict = {'Timestamp': time, 'teachingscore': teachingscore, 'teaching': teaching,
