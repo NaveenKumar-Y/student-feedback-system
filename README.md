@@ -18,8 +18,8 @@ The goal of this project is to develop an automated robust feedback analysis sys
 ![](static/StudentScrn4.png)
 
 ## Staff Feedback Dashboard
-![](static/StudentScrn15.png)
+![](static/StudentScrn5.png)
 
 ## Some Classified Sentiments
-![](static/StudentScrn16.png)
+![](static/StudentScrn6.png)
 
