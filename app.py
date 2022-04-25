@@ -81,7 +81,6 @@ def logout():
 
 @app.route("/predict", methods=['POST'])
 def predict():
-    # tfidf_vect = TfidfVectorizer(analyzer='word',max_features=2000)
     teaching = request.form['teaching']
     courseContent = request.form['coursecontent']
     examination = request.form['examination']
@@ -98,9 +97,6 @@ def predict():
 
     model = pickle.load(open('pickle_files\SVM_Classifier.pkl', 'rb'))
     tfidf_vect = pickle.load(open('tf_idf.pkl', 'rb'))
-    # sample = pd.DataFrame([sample])
-    # sample =  tfidf_vect.transform(sample[0])
-    # print('pd.array([teaching])')
     teachingscore = pd.array([teaching])
     teachingscore = tfidf_vect.transform(teachingscore)
     teachingscore = model.predict(teachingscore)
