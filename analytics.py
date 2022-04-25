@@ -49,7 +49,9 @@ def get_counts():
     path = 'dataset/database.csv'
     df = pd.read_csv(path)
     index = df.index
+    print(index)
     no_of_students = len(index)
+    print(no_of_students)
     total_feedbacks = len(index)*6
 
     df1 = df.groupby('teachingscore').count()[['teaching']]
@@ -107,4 +109,6 @@ def get_tables():
 def get_titles():
     df = pd.read_csv('dataset/database.csv')
     return df.columns.values
+
+print(get_counts())
 
