@@ -6,6 +6,7 @@ from datetime import datetime
 from analytics import write_to_csv_departments,write_to_csv_teachers
 from analytics import get_counts,get_tables,get_titles
 from teacherdashboard import get_feedback_counts
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 app = Flask(__name__)
 
@@ -80,7 +81,7 @@ def logout():
 
 @app.route("/predict", methods=['POST'])
 def predict():
-
+    # tfidf_vect = TfidfVectorizer(analyzer='word',max_features=2000)
     teaching = request.form['teaching']
     courseContent = request.form['coursecontent']
     examination = request.form['examination']
@@ -95,21 +96,49 @@ def predict():
     teacher5 = request.form['teacher5']
     teacher6 = request.form['teacher6']
 
-    model = pickle.load(open('pickel_files/SVM_classifier.pkl', 'rb'))
-    teachingscore = model.predict(pd.array([teaching]))
-    courseContentscore = model.predict(pd.array([courseContent]))
-    examinationscore = model.predict(pd.array([examination]))
-    labWorkscore = model.predict(pd.array([labWork]))
-    libraryFacilitiesscore = model.predict(pd.array([libraryFacilities]))
-    extraCurricularscore = model.predict(pd.array([extraCurricular]))
+    model = pickle.load(open('pickle_files\SVM_Classifier.pkl', 'rb'))
+    tfidf_vect = pickle.load(open('tf_idf.pkl', 'rb'))
+    # sample = pd.DataFrame([sample])
+    # sample =  tfidf_vect.transform(sample[0])
+    # print('pd.array([teaching])')
+    teachingscore = pd.array([teaching])
+    teachingscore = tfidf_vect.transform(teachingscore)
+    teachingscore = model.predict(teachingscore)
+    courseContentscore = pd.array([courseContent])
+    courseContentscore = tfidf_vect.transform(courseContentscore)
+    courseContentscore = model.predict(courseContentscore)
+    examinationscore = pd.array([examination])
+    examinationscore = tfidf_vect.transform(examinationscore)
+    examinationscore = model.predict(examinationscore)
+    labWorkscore = pd.array([labWork])
+    labWorkscore = tfidf_vect.transform(labWorkscore)
+    labWorkscore = model.predict(labWorkscore)
+    libraryFacilitiesscore = pd.array([libraryFacilities])
+    libraryFacilitiesscore = tfidf_vect.transform(libraryFacilitiesscore)
+    libraryFacilitiesscore = model.predict(libraryFacilitiesscore)
+    extraCurricularscore = pd.array([extraCurricular])
+    extraCurricularscore = tfidf_vect.transform(extraCurricularscore)
+    extraCurricularscore = model.predict(extraCurricularscore)
     time = datetime.now().strftime("%m/%d/%Y (%H:%M:%S)")
 
-    teacher1score = model.predict(pd.array([teacher1]))
-    teacher2score = model.predict(pd.array([teacher2]))
-    teacher3score = model.predict(pd.array([teacher3]))
-    teacher4score = model.predict(pd.array([teacher4]))
-    teacher5score = model.predict(pd.array([teacher5]))
-    teacher6score = model.predict(pd.array([teacher6]))
+    teacher1score = pd.array([teacher1])
+    teacher1score = tfidf_vect.transform(teacher1score)
+    teacher1score = model.predict(teacher1score)
+    teacher2score = pd.array([teacher2])
+    teacher2score = tfidf_vect.transform(teacher2score)
+    teacher2score = model.predict(teacher2score)
+    teacher3score = pd.array([teacher3])
+    teacher3score = tfidf_vect.transform(teacher3score)
+    teacher3score = model.predict(teacher3score)
+    teacher4score = pd.array([teacher4])
+    teacher4score = tfidf_vect.transform(teacher4score)
+    teacher4score = model.predict(teacher4score)
+    teacher5score = pd.array([teacher5])
+    teacher5score = tfidf_vect.transform(teacher5score)
+    teacher5score = model.predict(teacher5score)
+    teacher6score = pd.array([teacher6])
+    teacher6score = tfidf_vect.transform(teacher6score)
+    teacher6score = model.predict(teacher6score)
 
     write_to_csv_departments(time,teachingscore[0],teaching,courseContentscore[0],courseContent,
                  examinationscore[0],examination,labWorkscore[0],labWork,libraryFacilitiesscore[0],
@@ -178,4 +207,3 @@ def display():
 
 app.secret_key = os.urandom(12)
 app.run(port=5978, host='0.0.0.0', debug=True)
-
